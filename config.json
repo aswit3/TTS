@@ -1,6 +1,6 @@
 {
     "model": "Tacotron2",
-    "run_name": "ljspeech",
+    "run_name": "indic",
     "run_description": "tacotron2",
 
     // AUDIO PARAMETERS
@@ -60,8 +60,8 @@
     "reinit_layers": [],    // give a list of layer names to restore from the given checkpoint. If not defined, it reloads all heuristically matching layers.
 
     // TRAINING
-    "batch_size": 32,       // Batch size for training. Lower values than 32 might cause hard to learn attention. It is overwritten by 'gradual_training'.
-    "eval_batch_size":16,
+    "batch_size": 1,       // Batch size for training. Lower values than 32 might cause hard to learn attention. It is overwritten by 'gradual_training'.
+    "eval_batch_size":1,
     "r": 7,                 // Number of decoder frames to predict per iteration. Set the initial values if gradual training is enabled.
     "gradual_training": [[0, 7, 64], [1, 5, 64], [50000, 3, 32], [130000, 2, 32], [290000, 1, 32]], //set gradual training steps [first_step, r, batch_size]. If it is null, gradual training is disabled. For Tacotron, you might need to reduce the 'batch_size' as you proceeed.
     "loss_masking": true,         // enable / disable loss masking against the sequence padding.
@@ -118,10 +118,10 @@
     "max_seq_len": 153,     // DATASET-RELATED: maximum text length
 
     // PATHS
-    "output_path": "/home/erogol/Models/LJSpeech/",
+    "output_path": "/mnt/My_Projects/Tamil_TTS/TTS/tamil_tts/",
 
     // PHONEMES
-    "phoneme_cache_path": "/media/erogol/data_ssd2/mozilla_us_phonemes_3",  // phoneme computation is slow, therefore, it caches results in the given folder.
+    "phoneme_cache_path": "/mnt/My_Projects/Tamil_TTS/TTS/tamil_tts_phonemes_3",  // phoneme computation is slow, therefore, it caches results in the given folder.
     "use_phonemes": false,           // use phonemes instead of raw characters. It is suggested for better pronounciation.
     "phoneme_language": "en-us",     // depending on your target language, pick one from  https://github.com/bootphon/phonemizer#languages
 
@@ -134,9 +134,9 @@
     "datasets":   // List of datasets. They all merged and they get different speaker_ids.
         [
             {
-                "name": "ljspeech",
-                "path": "/home/erogol/Data/LJSpeech-1.1/",
-                "meta_file_train": "metadata.csv",
+                "name": "indic",
+                "path": "/mnt/Datasets/tamil_female_mono/",
+                "meta_file_train": "txt.done.data",
                 "meta_file_val": null
             }
         ]

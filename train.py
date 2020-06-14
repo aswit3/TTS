@@ -4,7 +4,7 @@ import sys
 import glob
 import time
 import traceback
-
+sys.path.append("/mnt/My_Projects/Tamil_TTS/")
 import numpy as np
 import torch
 from torch.utils.data import DataLoader

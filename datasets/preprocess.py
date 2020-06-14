@@ -3,7 +3,8 @@ from glob import glob
 import re
 import sys
 from TTS.utils.generic_utils import split_dataset
-
+import os
+import wave
 
 def load_meta_data(datasets):
     meta_data_train_all = []
@@ -204,4 +205,29 @@ def custom_turkish(root_path, meta_file):
             text = cols[1].strip()
             items.append([text, wav_file, speaker_name])
     print(f" [!] {len(skipped_files)} files skipped. They don't exist...")
+    return items
+
+
+def indic(root_path, meta_file):
+    print("\n\n\n Yes I'm Present \n\n\n")
+    """
+    https://www.iitm.ac.in/donlab/tts/index.php
+    Indic Dataset [Tamil, Telugu, Hindi, Malayalam, Kannada, Bengali...etc 13 indian languages mono voice]
+    Normalizes Indic meta data files to TTS format
+    """
+    txt_file = os.path.join(root_path, meta_file)
+    items = []
+    speaker_name = "indic"    
+    
+    with open(txt_file, "r") as ttf:
+        for line in ttf: 
+            line  = line.replace("( ","").replace(")", "").replace('"', "|")
+            cols  = line.split("  | ")
+            text  = cols[1]
+            wav_file = cols[0]+".wav"
+            wav_file = os.path.join(root_path, "wav", wav_file)
+            if os.path.isfile(wav_file):
+                if wave.open(wav_file, "rb").getframerate() != 22050:
+                    os.system("ffmpeg -i {} -acodec pcm_s16le -ac 1 -ar 22050 {} -y".format(wav_file, wav_file))
+                items.append([text, wav_file, speaker_name])
     return items
